@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Ventas - Sistema de Gestión de Ventas</title><link rel="stylesheet" href="style.css"><script src="script.js" defer></script></head>
+<body>
+  <header><h1>Sistema de Gestión de Ventas</h1><p>Registro de ventas</p></header>
+  <nav><a href="index.html">Inicio</a><a href="clientes.html">Clientes</a><a href="productos.html">Productos</a><a href="ventas.html">Ventas</a></nav>
+  <main>
+    <section class="bienvenida"><h2>Ventas realizadas</h2><p>Consulta y administra las ventas registradas en el sistema.</p></section>
+    <section class="formulario">
+      <h2 id="tituloFormularioVenta">Registrar venta</h2>
+      <form id="formVenta"><input type="hidden" id="idVenta">
+        <label for="idClienteVenta">Cliente</label><select id="idClienteVenta" required><option value="">Cargando clientes...</option></select>
+        <label for="fechaVenta">Fecha</label><input id="fechaVenta" type="date" required>
+        <label for="totalVenta">Total (COP)</label><input id="totalVenta" type="number" min="0" step="0.01" required>
+        <button type="submit" id="botonVenta">Registrar venta</button><button type="button" id="cancelarEdicionVenta" hidden>Cancelar edición</button><p id="mensajeVenta" role="status"></p>
+      </form>
+    </section>
+    <section><h2 style="text-align:center;margin:20px 0;">Historial de ventas</h2><div class="tarjetas" id="listaVentas"><p>Cargando ventas...</p></div></section>
+  </main><footer><p>Sistema de Gestión de Ventas - Proyecto ADSO</p></footer>
+</body></html>

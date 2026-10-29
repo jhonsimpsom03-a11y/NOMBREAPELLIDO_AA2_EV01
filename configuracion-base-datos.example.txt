@@ -1,0 +1,16 @@
+CONFIGURACIÓN DE BASE DE DATOS
+
+La base de datos del proyecto debe llamarse: tienda_celulares
+
+Opción rápida (PowerShell, solo para la sesión actual):
+  $env:DB_URL="jdbc:mariadb://localhost:3306/tienda_celulares"
+  $env:DB_USER="root"
+  $env:DB_PASSWORD="TU_CLAVE_MYSQL"
+  mvn spring-boot:run
+
+Reemplaza TU_CLAVE_MYSQL por tu contraseña local. No publiques esta contraseña
+en Git ni la compartas en el ZIP.
+
+Si tu usuario de MariaDB/MySQL no es root, cambia DB_USER.
+El archivo SQL suministrado corresponde a MariaDB 10.4.32 y contiene las tablas
+clientes, productos, ventas y detalle_ventas.
