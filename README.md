@@ -1,38 +1,60 @@
 # Sistema de Gestión de Ventas - Tienda de celulares
 
-Proyecto basado en las páginas HTML/CSS/JavaScript originales, con backend Java,
-Spring Boot, Maven y acceso a la base de datos mediante JDBC (`JdbcTemplate`).
+Proyecto Java con Spring Boot 3, Maven, JDBC (`JdbcTemplate`) y MariaDB. Esta entrega conserva el CRUD REST y las páginas HTML/CSS/JavaScript de la versión anterior y añade un servlet Java con una vista JSP para demostrar el procesamiento de formularios mediante GET y POST.
 
 ## Requisitos
-- JDK 17 o superior
-- Maven
-- MariaDB/MySQL iniciado y base `tienda_celulares` importada
-- Conexión local configurada en variables de entorno
+- JDK 17 o superior.
+- Maven 3.6 o superior.
+- MariaDB/MySQL iniciado.
+- Base de datos `tienda_celulares` importada desde `tienda_celulares.sql`.
 
-## Ejecutar
-En PowerShell, desde la carpeta que contiene `pom.xml`:
+## Configurar la base de datos
+Por defecto la aplicación intenta conectarse a `jdbc:mariadb://localhost:3306/tienda_celulares`, con usuario `root` y contraseña vacía. Si tu configuración es diferente, define estas variables en PowerShell antes de iniciar la aplicación:
 
 ```powershell
 $env:DB_URL="jdbc:mariadb://localhost:3306/tienda_celulares"
 $env:DB_USER="root"
 $env:DB_PASSWORD="TU_CLAVE"
+```
+
+No guardes contraseñas reales en el proyecto ni en Git.
+
+## Ejecutar
+Abre PowerShell dentro de la carpeta que contiene `pom.xml` y ejecuta:
+
+```powershell
+mvn clean package
 mvn spring-boot:run
 ```
 
-Abre http://localhost:8080
+Abre `http://localhost:8080`. No abras los archivos HTML directamente con doble clic; deben servirse desde Spring Boot para que las llamadas a `/api/...` funcionen.
 
-No abras los HTML directamente con doble clic: deben servirse desde Spring Boot
-para que las llamadas `/api/...` lleguen al backend.
+## Módulo de servlet y JSP añadido para EV02
+- `GET /clientes-servlet`: consulta todos los clientes.
+- `GET /clientes-servlet?buscar=texto`: filtra por nombre o correo.
+- `POST /clientes-servlet`: registra un cliente con nombre, teléfono, correo y dirección.
+- Vista JSP: `src/main/webapp/WEB-INF/jsp/clientes.jsp`.
+- Servlet: `src/main/java/co/sena/tienda/servlet/ClienteServlet.java`.
 
-## API REST
-- `GET /api/clientes`, `POST /api/clientes`, `PUT /api/clientes/{id}`, `DELETE /api/clientes/{id}`
-- `GET /api/productos`, `POST /api/productos`, `PUT /api/productos/{id}`, `DELETE /api/productos/{id}`
-- `GET /api/ventas`, `POST /api/ventas`, `PUT /api/ventas/{id}`, `DELETE /api/ventas/{id}`
+La vista JSP está ubicada bajo `WEB-INF`, por lo que se accede a ella a través del servlet y no directamente desde el navegador.
 
-Las ventas permiten administrar la cabecera (`id_cliente`, `fecha`, `total`).
-Al eliminar una venta también se eliminan sus filas de `detalle_ventas`.
-La eliminación de clientes/productos vinculados a ventas se bloquea para respetar
-las claves foráneas.
+## API REST conservada
+- `/api/clientes`: GET, POST, PUT y DELETE.
+- `/api/productos`: GET, POST, PUT y DELETE.
+- `/api/ventas`: GET, POST, PUT y DELETE.
 
-## Seguridad de configuración
-No guardar credenciales reales en el repositorio. Usa variables de entorno.
+El proyecto conserva las páginas `index.html`, `clientes.html`, `productos.html`, `ventas.html`, `script.js` y `style.css`, además de los controladores y el script SQL existentes.
+
+## Estructura principal
+```text
+tienda_celulares/
+├── pom.xml
+├── tienda_celulares.sql
+├── src/main/java/co/sena/tienda/
+│   ├── TiendaCelularesApplication.java
+│   ├── controller/
+│   └── servlet/ClienteServlet.java
+├── src/main/resources/static/
+│   └── páginas HTML, JavaScript y CSS existentes
+└── src/main/webapp/WEB-INF/jsp/clientes.jsp
+```
